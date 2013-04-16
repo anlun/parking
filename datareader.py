@@ -41,3 +41,15 @@ with open('data.csv', 'rb') as csvfile:
 		flag += 1
 
 # Записать в БД
+db = MySQLdb.connect(host='178.130.32.141', user='vova', passwd='pass', db='olimpis')
+cursor = db.cursor()
+
+sql = """ SELECT country_name FROM country """
+cursor.execute(sql)
+data = cursor.fetchall()
+
+for rec in data:
+	name, = rec
+	print name
+
+db.close()
