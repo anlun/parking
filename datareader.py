@@ -35,6 +35,7 @@ with open('data.csv', 'rb') as csvfile:
 		address = fields[4]
 		x_pos   = fields[5]
 		y_pos   = fields[6]
+		metro   = fields[12]
 		size    = fields[13]
 
 		print ', '.join([uid, address, x_pos, y_pos, size])
