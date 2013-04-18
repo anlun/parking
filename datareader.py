@@ -15,11 +15,12 @@ pay_parking_filename  = 'pay_parking.csv'
 pay_parking_url       = 'http://data.mos.ru/datasets/download/623'
 
 # Скачать нужные OpenData
-urllib.urlretrieve(metro_url, metro_filename)
-urllib.urlretrieve(swap_parking_url, swap_parking_filename)
-urllib.urlretrieve(pay_parking_url, pay_parking_filename)
+# urllib.urlretrieve(metro_url, metro_filename)
+# urllib.urlretrieve(swap_parking_url, swap_parking_filename)
+# urllib.urlretrieve(pay_parking_url, pay_parking_filename)
 
 def parse_csv(filename, positions):
+	result = []
 	with open(filename, 'rb') as csvfile:
 		reader = csv.reader(csvfile, delimiter=';')
 		flag = 0
@@ -32,10 +33,12 @@ def parse_csv(filename, positions):
 			if flag > 5: # just for tests
 				break
 
-			fields = [row[i] for i in positions]
+			fields = [row[i].strip() for i in positions]
+			result.append(fields)
 
 			print ', '.join(fields)
 			flag += 1
+	return result
 
 # id, address, x_pos, y_pos, size | 7 - metro
 # 1 ,       4,     5,     6,    8
