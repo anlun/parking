@@ -5,17 +5,19 @@ import os
 import MySQLdb
 import csv
 
-def download_rename(address, name):
-	urllib.urlretrieve(address, name)
+metro_filename        = 'metro.csv'
+metro_url             = 'http://data.mos.ru/datasets/download/624'
 
-# Скачать станции метрополитена
-# download_rename('http://data.mos.ru/datasets/download/624', 'metro.csv')
+swap_parking_filename = 'swap_parking.csv'
+swap_parking_url      = 'http://data.mos.ru/datasets/download/622'
 
-# Скачать перехватывающие парковки
-# download_rename('http://data.mos.ru/datasets/download/622', 'swap_parking.csv')
+pay_parking_filename  = 'pay_parking.csv'
+pay_parking_url       = 'http://data.mos.ru/datasets/download/623'
 
-# Скачать платные парковки
-# download_rename('http://data.mos.ru/datasets/download/623', 'pay_parking.csv')
+# Скачать нужные OpenData
+urllib.urlretrieve(metro_url, metro_filename)
+urllib.urlretrieve(swap_parking_url, swap_parking_filename)
+urllib.urlretrieve(pay_parking_url, pay_parking_filename)
 
 def parse_csv(filename, positions):
 	with open(filename, 'rb') as csvfile:
@@ -37,11 +39,11 @@ def parse_csv(filename, positions):
 
 # id, address, x_pos, y_pos, size | 7 - metro
 # 1 ,       4,     5,     6,    8
-# parse_csv('swap_parking.csv', [1, 4, 5, 6, 8])
+parse_csv(swap_parking_filename, [1, 4, 5, 6, 8])
 
 # id, address, x_pos, y_pos, size
 # 1 ,       4,     5,     6,    7
-# parse_csv('pay_parking.csv', [1, 4, 5, 6, 7])
+parse_csv(pay_parking_filename, [1, 4, 5, 6, 7])
 
 # 0_uidnftn;1_Наименование;0_label;0_address;0_x;0_y;
 # 0_bui_no_bti;0_cad_no;0_street_bti;0_house_bti;0_hadd_bti;
@@ -51,7 +53,7 @@ def parse_csv(filename, positions):
 
 # name, x_pos, y_pos, line
 # 1   ,     4,     5,   11
-parse_csv('metro.csv', [1, 4, 5, 11])
+parse_csv(metro_filename, [1, 4, 5, 11])
 
 # Записать в БД
 db = MySQLdb.connect(host='178.130.32.141', user='vova', passwd='pass', db='olimpis')
