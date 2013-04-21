@@ -1,0 +1,1 @@
+ALTER TABLE metro ADD UNIQUE (header);
