@@ -79,12 +79,12 @@ def update_parking_info(connect, cursor):
 
 		for parking in swap_parking:
 			# TODO: убрать Magic Number в parking_type_id
-			sql = """INSERT INTO parking (parking_type_id, header, address, lat, lng, total_space) VALUES (1, \"%s\", \"%s\", %s, %s, %s)""" % (parking[1], parking[1], parking[3].replace(',', '.'), parking[2].replace(',', '.'), parking[4])
+			sql = """INSERT INTO parking (parking_type_id, is_free, header, address, lat, lng, total_space) VALUES (1, 1, \"%s\", \"%s\", %s, %s, %s)""" % (parking[1], parking[1], parking[3].replace(',', '.'), parking[2].replace(',', '.'), parking[4])
 			cursor.execute(sql)
 
 		for parking in pay_parking:
 			# TODO: убрать Magic Number в parking_type_id и в is_free
-			sql = """INSERT INTO parking (parking_type_id, is_free, header, address, lat, lng, total_space) VALUES (1, 0, \"%s\", \"%s\", %s, %s, %s)""" % (parking[1], parking[1], parking[3].replace(',', '.'), parking[2].replace(',', '.'), parking[4])
+			sql = """INSERT INTO parking (parking_type_id, is_free, header, address, lat, lng, total_space) VALUES (0, 0, \"%s\", \"%s\", %s, %s, %s)""" % (parking[1], parking[1], parking[3].replace(',', '.'), parking[2].replace(',', '.'), parking[4])
 			cursor.execute(sql)
 
 		connect.commit()
